@@ -95,22 +95,22 @@ function generatePassword(){
        
       }
       
-      
+      //filters out any prefrence not choisen by the user
       var typesOfArray= [{confirmLowerChar},{confirmNumericChar},{confirmUpperChar}, {confirmSymbolChar}].filter
       (
           item => Object.values(item)[0]
       );
       
-      
+      //if user doesn't choose any of the options
       if (!confirmSymbolChar && !confirmNumericChar && !confirmLowerChar && !confirmUpperChar){
-          return 'must cumbit somthing';
+          return 'You must confirm at lest one of the options';
         }
 
         for(i = 0; i < charLengthPrompt; i++){
             typesOfArray.forEach(prefrence => {
                 var functionName = Object.keys(prefrence)[0];
                 console.log('funName: ', functionName);
-                mypassword += rndmFunction[functionName]();
+                //mypassword += rndmFunction[functionName](); creates script.js:113 Uncaught TypeError: rndmFunction[functionName] is not a function
 
             });
         }
