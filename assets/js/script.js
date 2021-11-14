@@ -7,7 +7,22 @@ var confirmNumericChar;
 var confirmLowerChar;
 var confirmUpperChar;
 
+var userChoices= [confirmSymbolChar, confirmNumericChar, confirmLowerChar, confirmUpperChar];
+
+var valueSym;
+var valueDwn;
+var valueNum;
+var valueUp;
+
 var randomSymbol = '!"#$%&\'()*+,-./:;<=>@[\\]^-`{|}~';
+
+// sets a object of the random functions
+var rndmFunction= {
+    symbol: getRandomSymbol,
+    numeric: getRandomNumeric,
+    lowerCase: getRandomLower,
+    upperCase: getRandomUpper
+}
 
 // Write password to the #password input
 function writePassword() {
@@ -22,6 +37,15 @@ function writePassword() {
 generateBtn.addEventListener("click", writePassword);
 
 // random generators******************************************************************
+
+function getRandomSymbol(){
+    return randomSymbol[Math.floor(Math.random()*randomSymbol.length)];
+}
+
+function getRandomNumeric(){
+    return String.fromCharCode(Math.floor(Math.random() * 10) + 48);
+}
+
 function getRandomLower(){
     return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
 }
@@ -30,18 +54,15 @@ function getRandomUpper(){
     return String.fromCharCode(Math.floor(Math.random() * 26) + 65);   
 }
 
-function getRandomNumeric(){
-    return String.fromCharCode(Math.floor(Math.random() * 10) + 48);
-}
 
-function getRandomSymbol(){
-    return randomSymbol [Math.floor(Math.random()*randomSymbol.length)];
-}
+
 
 //*************************************************************************************
 
 //gets input form the user 
 function generatePassword(){
+
+    var mypassword = "";
 
     //first prompt for the user must be between 8-128 characters long
     var charLengthPrompt = window.prompt("How many charecters would you like your password to contain?");
@@ -73,4 +94,26 @@ function generatePassword(){
        confirmUpperChar = window.confirm("Click OK to confirm including Upppercase charracters");
        
       }
+      
+      
+      var typesOfArray= [{confirmLowerChar},{confirmNumericChar},{confirmUpperChar}, {confirmSymbolChar}].filter
+      (
+          item => Object.values(item)[0]
+      );
+      
+      
+      if (!confirmSymbolChar && !confirmNumericChar && !confirmLowerChar && !confirmUpperChar){
+          return 'must cumbit somthing';
+        }
+
+        for(i = 0; i < charLengthPrompt; i++){
+            typesOfArray.forEach(prefrence => {
+                var functionName = Object.keys(prefrence)[0];
+                console.log('funName: ', functionName);
+                mypassword += rndmFunction[functionName]();
+
+            });
+        }
+        
+
 };
