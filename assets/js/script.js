@@ -54,6 +54,10 @@ function getRandomUpper(){
     return String.fromCharCode(Math.floor(Math.random() * 26) + 65);   
 }
 
+function getRandomInt(max){
+    return Math.floor(Math.random()*max)
+}
+
 
 
 
@@ -61,8 +65,11 @@ function getRandomUpper(){
 
 //gets input form the user 
 function generatePassword(){
-
+    //variables for do..while loop
     var mypassword = "";
+    var i =0
+    var functionName;
+    var isec = 4;
 
     //first prompt for the user must be between 8-128 characters long
     var charLengthPrompt = window.prompt("How many charecters would you like your password to contain?");
@@ -75,7 +82,7 @@ function generatePassword(){
     else if (charLengthPrompt < 8){
         window.alert("Password length must be at least 8 characters.")
         return;
-      }
+    }
   
     else if(charLengthPrompt > 128){
       window.alert("Password length must be less than 128 characters.")
@@ -88,32 +95,29 @@ function generatePassword(){
     }
   
     else{
-       confirmSymbolChar = window.confirm("Click OK to confirm including special charracters");
-       confirmNumericChar = window.confirm("Click OK to confirm including numeric charracters");
-       confirmLowerChar = window.confirm("Click OK to confirm including Lowercase charracters");
-       confirmUpperChar = window.confirm("Click OK to confirm including Upppercase charracters");
-       
-      }
+    confirmSymbolChar = window.confirm("Click OK to confirm including special charracters");
+    confirmNumericChar = window.confirm("Click OK to confirm including numeric charracters");
+    confirmLowerChar = window.confirm("Click OK to confirm including Lowercase charracters");
+    confirmUpperChar = window.confirm("Click OK to confirm including Upppercase charracters");
+    }
       
-      //filters out any prefrence not choisen by the user
-      var typesOfArray= [{confirmLowerChar},{confirmNumericChar},{confirmUpperChar}, {confirmSymbolChar}].filter
-      (
-          item => Object.values(item)[0]
-      );
+    //filters out any prefrence not choisen by the user
+    var typesOfArray= [{confirmLowerChar},{confirmNumericChar},{confirmUpperChar}, {confirmSymbolChar}].filter
+    (
+        item => Object.values(item)[0]
+    );
       
-      //if user doesn't choose any of the options
-      if (!confirmSymbolChar && !confirmNumericChar && !confirmLowerChar && !confirmUpperChar){
-          return 'You must confirm at lest one of the options';
-        }
-
-        for(i = 0; i < charLengthPrompt; i++){
-            typesOfArray.forEach(prefrence => {
-                var functionName = Object.keys(prefrence)[0];
-                console.log('funName: ', functionName);
-                //mypassword += rndmFunction[functionName](); creates script.js:113 Uncaught TypeError: rndmFunction[functionName] is not a function
-
-            });
-        }
-        
-
+    //if user doesn't choose any of the options
+    if (!confirmSymbolChar && !confirmNumericChar && !confirmLowerChar && !confirmUpperChar){
+        return 'You must confirm at lest one of the options';
+    }    
+    //do while loop that generates the passward and provides the result for generatePassword()
+    do{ 
+    i += 1;
+    functionName= Object.keys(rndmFunction)[getRandomInt(isec)];
+    mypassword += rndmFunction[functionName]();
+    console.log("password: "+mypassword);
+    }while(i<charLengthPrompt);
+    
+    return mypassword
 };
